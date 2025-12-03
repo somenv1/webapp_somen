@@ -1,0 +1,16 @@
+{
+  "name": "azure-minimal-nodejs",
+  "version": "1.0.0",
+  "description": "Minimal Node.js app for Azure Free tier - No npm dependencies",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo 'No tests'"
+  },
+  "engines": {
+    "node": "20.x"
+  },
+  "dependencies": {
+    "mssql": "^12.1.1"
+  }
+}

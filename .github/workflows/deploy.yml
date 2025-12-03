@@ -1,0 +1,39 @@
+name: Deploy to Azure
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run syntax check
+      run: node -c server.js
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Deploy to Azure App Service
+      run: |
+        az webapp up \
+          --name majorwebapp \
+          --resource-group majorproject \
+          --plan majorplan \
+          --runtime "NODE:20-lts"
+
+    - name: Logout from Azure
+      run: az logout
